@@ -24,47 +24,51 @@ The normal `input` with `type="text"` is fairly good to use, but it has some fla
   <template>
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <custom-style>
-      <style is="custom-style">
-        #hex {
-          --text-input-allign: center;
-          --text-input: {
-            color: #111;
-            padding: 0.5em;
-            border-radius: 0.5em;
-            border-color: #ddd;
-            border-style: dotted;
-            transition: background-color 250ms ease-in-out;
-          };
-          --text-input-focus: {
-            border-color: #555;
-            border-style: solid;
-            background: rgba(0, 0, 0, 0.15);
-          };
-          --text-input-placeholder: {
-            color: #492020;
-          };
-          --text-input-invalid: {
-            background: rgba(255, 0, 0, 0.15);
-            border-color: #999;
-            border-style: dashed;
-          };
-        }
-      </style>
-    </custom-style>
     <link rel="import" href="text-input.html">
+    <dom-bind>
+      <template is="dom-bind">
+        <custom-style>
+          <style is="custom-style">
+            #hex {
+              --text-input-allign: center;
+              --text-input: {
+                color: #111;
+                padding: 0.5em;
+                border-radius: 0.5em;
+                border-color: #ddd;
+                border-style: dotted;
+                transition: background-color 250ms ease-in-out;
+              };
+              --text-input-focus: {
+                border-color: #555;
+                border-style: solid;
+                background: rgba(0, 0, 0, 0.15);
+              };
+              --text-input-placeholder: {
+                color: #492020;
+              };
+              --text-input-invalid: {
+                background: rgba(255, 0, 0, 0.15);
+                border-color: #999;
+                border-style: dashed;
+              };
+            }
+          </style>
+        </custom-style>
 
-    <next-code-block></next-code-block>
+        <next-code-block></next-code-block>
+      </template>
+    </dom-bind>
   </template>
 </custom-element-demo>
 ```
 -->
 ```html
-<text-input id="hex" value="{{value}}" input="{{input}}" default="#111" required pattern="^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" size="7" maxlength="7" minlength="4"></text-input>
-<div class="vertical-section-container result">
-  <div><code>input</code>: <b>[[input]]</b></div>
-  <div><code>value</code>: <b>[[value]]</b></div>
-</div>
+  <p>
+    <text-input id="hex" value="{{value}}" input="{{input}}" default="#111" required pattern="^#(?:[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" size="7" maxlength="7" minlength="4"></text-input>
+  </p>
+  <p>input: <b>[[input]]</b></p>
+  <p>value: <b>[[value]]</b></p>
 ```
 
 ### Installation
