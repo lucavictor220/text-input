@@ -29,11 +29,11 @@
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
   },
-  "_release": "d61297071b",
+  "_release": "bbb6b3e3cb",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "d61297071b49ed09b17efd00e8b1a0aecdc7533d"
+    "commit": "bbb6b3e3cb63ac5b58a83a163fe9717b9fc49312"
   },
   "_source": "https://github.com/fooloomanzoo/text-input.git",
   "_target": "master",
