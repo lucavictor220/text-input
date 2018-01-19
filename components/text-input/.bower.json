@@ -18,22 +18,24 @@
   },
   "license": "MIT",
   "dependencies": {
-    "polymer": "Polymer/polymer"
+    "polymer": "Polymer/polymer#2",
+    "input-picker-pattern": "fooloomanzoo/input-picker-pattern#1.0.15"
   },
   "devDependencies": {
     "webcomponentsjs": "webcomponents/webcomponentsjs",
     "iron-component-page": "PolymerElements/iron-component-page",
     "iron-flex-layout": "PolymerElements/iron-flex-layout",
+    "iron-form": "PolymerElements/iron-form",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers"
   },
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
   },
-  "_release": "7f37a46d9b",
+  "_release": "ba688ed73b",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "7f37a46d9b36a61f39605d3268144b2b88937ede"
+    "commit": "ba688ed73b522b41495ceac826d75b89d5051a9d"
   },
   "_source": "https://github.com/fooloomanzoo/text-input.git",
   "_target": "master",
