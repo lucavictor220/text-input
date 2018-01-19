@@ -18,7 +18,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "polymer": "Polymer/polymer"
+    "polymer": "Polymer/polymer",
+    "iron-form": "PolymerElements/iron-form"
   },
   "devDependencies": {
     "webcomponentsjs": "webcomponents/webcomponentsjs",
