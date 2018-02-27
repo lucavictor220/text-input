@@ -1,0 +1,72 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`dropdown-style`
+styles for used for a tip of the dropdown
+-->
+
+<dom-module id="dropdown-tip-style">
+  <template>
+    <style>
+      .dropdown:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-width: var(--dropdown-tip-size, 0px);
+        border-style: solid;
+        border-color: transparent transparent transparent transparent;
+        left: auto;
+        top: auto;
+        bottom: auto;
+        right: auto;
+      }
+      :host([no-tip]) .dropdown:after {
+        display: none;
+      }
+      :host([vertical-align="top"]) .dropdown:after {
+        top: calc(-2 * var(--dropdown-tip-size, 0px));
+        left: calc(2 * var(--dropdown-tip-size, 0px));
+        border-bottom-color: var(--input-background, #000);
+      }
+      :host([vertical-align="bottom"]) .dropdown:after {
+        bottom: calc(-2 * var(--dropdown-tip-size, 0px));
+        left: calc(2 * var(--dropdown-tip-size, 0px));
+        border-top-color: var(--input-background, #000);
+      }
+
+      :host([horizontal-align="left"]) .dropdown:after {
+        top: calc(2 * var(--dropdown-tip-size, 0px));
+        left: calc(-2 * var(--dropdown-tip-size, 0px));
+        border-right-color: var(--input-background, #000);
+      }
+      :host([horizontal-align="left"][vertical-align="top"]) .dropdown:after {
+        border-bottom-color: transparent;
+      }
+      :host([horizontal-align="left"][vertical-align="bottom"]) .dropdown:after {
+        top: auto;
+        bottom: calc(2 * var(--dropdown-tip-size, 0px));
+        border-top-color: transparent;
+      }
+      :host([horizontal-align="right"]) .dropdown:after {
+        top: calc(2 * var(--dropdown-tip-size, 0px));
+        right: calc(-2 * var(--dropdown-tip-size, 0px));
+        border-left-color: var(--input-background, #000);
+      }
+      :host([horizontal-align="right"][vertical-align="top"]) .dropdown:after {
+        left: auto;
+        border-bottom-color: transparent;
+      }
+      :host([horizontal-align="right"][vertical-align="bottom"]) .dropdown:after {
+        top: auto;
+        bottom: calc(2 * var(--dropdown-tip-size, 0px));
+        left: auto;
+        border-top-color: transparent;
+      }
+      :host([vertical-align="auto"]) .dropdown:after {
+        top: calc(50% - var(--dropdown-tip-size, 0px)); bottom: auto;
+      }
+    </style>
+  </template>
+
+</dom-module>

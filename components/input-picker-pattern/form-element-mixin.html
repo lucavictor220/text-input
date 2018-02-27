@@ -15,14 +15,24 @@
            * required attribute
            */
           required: {
-            type: Boolean
+            type: Boolean,
+            reflectToAttribute: true
+          },
+
+          /**
+           * required attribute
+           */
+          invalid: {
+            type: Boolean,
+            reflectToAttribute: true
           },
 
           /**
            * disables the input
            */
           disabled: {
-            type: Boolean
+            type: Boolean,
+            reflectToAttribute: true
           },
 
           /**
@@ -37,15 +47,57 @@
            */
           value: {
             type: String
+          },
+
+          /**
+           * is true when the value is not undefined
+           */
+          _valueIsSet: {
+            type: Boolean,
+            value: false
           }
         }
+      }
+
+      static get observers() {
+        return [
+          '_computeInvalid(required, value)',
+          '_computeValueIsSet(value)'
+        ]
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this._ensureAttribute('tabindex', 0);
+      }
+
+      _computeInvalid(required, value) {
+        this.invalid = Boolean(required && !value);
+      }
+
+      _computeValueIsSet(value) {
+        this._valueIsSet = value !== undefined;
       }
 
       /**
        * validates the input for iron-form
        */
       validate() {
-        return !this.disabled && !(this.required && this.value);
+        return !this.invalid;
+      }
+
+      /**
+       * attach dom with `delegatesFocus: true` so that the element is also focussed while its's children are too, and to autofocus to first tabable
+       */
+      _attachDom(dom) {
+        if (!this.shadowRoot) {
+          this.attachShadow({
+              mode: 'open',
+              delegatesFocus: true
+          });
+          this.shadowRoot.appendChild(dom);
+        }
+        return this.shadowRoot;
       }
     }
   }

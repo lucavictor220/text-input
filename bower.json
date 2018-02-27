@@ -28,6 +28,7 @@
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers"
   },
   "resolutions": {
-    "webcomponentsjs": "^1.0.0"
+    "webcomponentsjs": "^1.0.0",
+    "input-picker-pattern": "2"
   }
 }

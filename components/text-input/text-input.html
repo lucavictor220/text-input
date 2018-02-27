@@ -12,7 +12,7 @@
    */
   const TextInputMixin = (superClass) => { // eslint-disable-line no-unused-vars
 
-    return class extends FormElementMixin(superClass) {
+    return class extends FormElementMixin(superClass) { // eslint-disable-line no-undef
 
       static get template() {
         return `
@@ -27,14 +27,9 @@
             :host {
               display: inline-flex;
               box-sizing: content-box;
-              --text-input: {
-                @apply --input-style;
-              };
-              --text-input-focus: {
-                @apply --input-focus;
-              };
               padding: 0 !important;
             }
+            :host(:focus),
             #input:focus {
               outline: none;
             }
@@ -42,31 +37,66 @@
               font-family: inherit;
               font-size: inherit;
               font-weight: inherit;
-              text-align: var(--text-input-allign, var(--input-allign, left));
+              text-align: var(--text-input-allign, center);
               overflow: visible;
-              border-color: transparent;
-              border-width: 0;
               box-sizing: content-box;
+              border: none;
+              outline: none;
+              -webkit-background-clip: padding-box;
+              background-clip: padding-box;
+              border-color: transparent;
+              line-height: 1;
               color: var(--text-input-color, var(--input-color, inherit));
               background: var(--text-input-background, var(--input-background, inherit));
+              @apply --input-style;
               @apply --text-input;
             }
+            #input::-webkit-input-placeholder,
             #input::placeholder {
+              @apply --input-placeholder;
               @apply --text-input-placeholder;
             }
             #input:hover,
             #input:focus {
               color: var(--text-input-focus-color, var(--input-focus-color, var(--text-input-color, inherit)));
               background: var(--text-input-focus-background, var(--input-focus-background, var(--text-input-background, inherit)));
+              @apply --input-focus;
               @apply --text-input-focus;
             }
+            input::-moz-focus-inner {
+              border-style: none;
+              padding: 0;
+            }
+            input::-moz-focusring {
+              border-width: 0;
+              color: transparent;
+              text-shadow: 0 0 0 var(--text-input-focus-color, var(--input-focus-color, #000));
+            }
+            :host([invalid]) #input,
             #input:not(:valid),
             #input:invalid {
+              @apply --input-invalid;
               @apply --text-input-invalid;
             }
             :host([disabled]) {
               color: var(--text-input-disabled-color, var(--input-disabled-color, inherit));
               @apply --input-disabled;
+            }
+            input::-moz-selection {
+              color: var(--text-input-color, var(--input-color, inherit));
+              background: var(--text-input-background, var(--input-background, transparent));
+            }
+            input:focus::-moz-selection {
+              color: var(--input-selection-color, inherit);
+              background: var(--input-selection-background, rgba(255,255,255,0.5));
+            }
+            input::selection {
+              color: var(--text-input-color, var(--input-color, inherit));
+              background: var(--text-input-background, var(--input-background, transparent));
+            }
+            input:focus::selection {
+              color: var(--input-selection-color, inherit);
+              background: var(--input-selection-background, rgba(255,255,255,0.5));
             }
           </style>
         `;
@@ -189,7 +219,7 @@
            * if true, the length of the value is not used for computing the size-attribute
            * @type {number}
            */
-          noAutoSize: {
+          noAutoWidth: {
             type: Boolean
           },
 
@@ -208,8 +238,8 @@
         super.connectedCallback();
         this._ensureAttribute('tabindex', 0);
         this.addEventListener('focus', this.focus.bind(this), false);
-        if (!this.noAutoSize) {
-          this.size = (this.value && this.value.length) || (this.placeholder && this.placeholder.length) || 1;
+        if (!this.noAutoWidth) {
+          this._computeWidth(this.value || this.placeholder || '0');
         }
       }
 
@@ -253,13 +283,16 @@
         if (value === undefined) return;
 
         if (!(this._validationRegExp && this._validationRegExp.exec(value) === null)) {
-          if (!this.noAutoSize) {
-            this.size = value.length || (this.placeholder && this.placeholder.length) || 1;
+          if (!this.noAutoWidth) {
+            this._computeWidth(value);
           }
           this.input = value;
         } else if (oldValue !== undefined && this._validationRegExp.exec(oldValue) !== null) {
           this.value = oldValue;
         }
+      }
+      _computeWidth(str) {
+        this.size = str.length || 1;
       }
 
       _checkKeycode(e) {
@@ -308,7 +341,7 @@
     /**
      *  `text-input` is an element that can:
      * * guarantee **live**-data to be valid
-     * * be styled easily
+     * * be styled easily and in unified way
      *
      * Example:
      * ```html
@@ -320,16 +353,19 @@
      * ### Styling
      * Custom property                   | Description                                  | Default
      * ----------------------------------|----------------------------------------------|--------------------
-     * `--text-input`                    | style of the input                           | {}
-     * `--text-input-invalid`            | style of the input                           | {}
-     * `--text-input-focus`              | style of the focussed and hovered input      | {}
-     * `--text-input-placeholder`        | style of the placeholder                     | {}
-     * `--text-input-color`              | color of the input                           | inherit
-     * `--text-input-background`         | background of the input                      | inherit
-     * `--text-input-focus-color`        | color of the focussed and hovered input      | inherit
-     * `--text-input-focus-background`   | background of the focussed and hovered input | inherit
-     * `--text-input-disabled-color`     | color of the disabled input                  | inherit
-     * `--text-input-allign`             | allignment of the text of the input          | left
+     * `--text-input` | mixin applied to of the input | {}
+     * `--text-input-invalid` | mixin applied to an invalid input | {}
+     * `--text-input-focus` | mixin applied to the focussed and hovered input | {}
+     * `--text-input-placeholder` | mixin applied to the placeholder           | {}
+     * `--text-input-color` | color of the input | var(--input-color, inherit)
+     * `--text-input-background` | background of the input | var(--input-background, inherit)
+     * `--text-input-focus-color` | color of the focussed and hovered input | var(--input-focus-color, inherit)
+     * `--text-input-focus-background` | background of the focussed and hovered input | var(--input-background-color, inherit)
+     * `--text-input-disabled-color` | color of the disabled input | var(--input-disabled-color, inherit)
+     * `--text-input-allign` | allignment of the text of the input | center
+     * `--input-disabled` | mixin applied to the disabled input | {}
+     * `--input-selection-color` | color of selected text in the input only when focused | rgba(255,255,255,0.5)
+     * `--input-selection-background` | background of selected text in the input only when focused | transparent
      *
      * ```css
      * :host {
@@ -349,9 +385,9 @@
      * @appliesMixin TextInputMixin
      *
      * @demo demo/index.html
-     * @demo demo/iron-form.html
+     * @demo demo/iron-form.html in a form
      **/
-    class TextInput extends TextInputMixin(Polymer.Element) {
+    class TextInput extends TextInputMixin(Polymer.Element) { // eslint-disable-line no-undef
 
       static get is() {
         return 'text-input';

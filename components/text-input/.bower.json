@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "polymer": "Polymer/polymer#2",
-    "input-picker-pattern": "fooloomanzoo/input-picker-pattern#1.0.15"
+    "input-picker-pattern": "fooloomanzoo/input-picker-pattern#2"
   },
   "devDependencies": {
     "webcomponentsjs": "webcomponents/webcomponentsjs",
@@ -31,11 +31,11 @@
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
   },
-  "_release": "ba688ed73b",
+  "_release": "a57b26057e",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "ba688ed73b522b41495ceac826d75b89d5051a9d"
+    "commit": "a57b26057e15b4427af33b76826c4073963301e0"
   },
   "_source": "https://github.com/fooloomanzoo/text-input.git",
   "_target": "master",
