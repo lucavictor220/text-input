@@ -39,18 +39,27 @@
           }
           #minsize,
           #size {
-            min-width: inherit;
-            max-width: inherit;
-            box-sizing: border-box;
-            margin: 0;
             position: fixed;
             top: 0; left: 0; right: auto; bottom: auto;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            font-style: inherit;
+            outline: none;
+            line-height: normal;
+            box-sizing: content-box;
             visibility: hidden !important;
             opacity: 0 !important;
             pointer-events: none !important;
+            padding: 0 !important;
+            margin: 0;
+            min-width: inherit;
+            max-width: inherit;
             border: var(--input-border-width, thin) solid transparent;
+            @apply --input-style;
           }
           #input {
+            box-sizing: content-box;
             width: 0;
           }
         `;
@@ -230,7 +239,9 @@
        * @overwrite
        */
       _inputChanged(input) {
-        this._reflectPropertyToValue(input);
+        if (input !== undefined) {
+          this._reflectPropertyToValue(input);
+        }
         if (this.autoResize) {
           this._debouncedComputeWidth();
         }
@@ -249,7 +260,9 @@
       }
 
       _updateValue(e) {
-        this._reflectValueToProperty(this.value);
+        if (this.value !== undefined) {
+          this._reflectValueToProperty(this.value);
+        }
         this._debouncedComputeWidth();
         e && e.stopPropagation && e.stopPropagation();
       }
@@ -297,7 +310,6 @@
           }
         }
         this._minSizeJob = setTimeout(minsizer.bind(this), 0);
-
       }
 
       _debouncedComputeWidth() {
